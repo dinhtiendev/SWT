@@ -1,0 +1,3 @@
+DOC1|Nghia|Orthopedics|3
+DOC2|Phuong|Obstetrics|2
+DOC3|Lien|orthodontic|1
