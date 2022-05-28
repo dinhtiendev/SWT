@@ -52,9 +52,9 @@ public class DoctorHash {
             if (check.isDuplicatelyCodeDoctor(code, listDoctors)) {
                 System.out.println("Id is duplicate");
             } else {
-                String name = input.stringWord("Enter Name:", 20);
+                String name = input.stringName("Enter Name:");
                 Date dateOfBirth = input.stringDate("Enter Date of Birth:");
-                String specialization = input.stringWord("Enter Specialization:", 255);
+                String specialization = input.stringSpecialization("Enter Specialization:");
                 int availability = input.option("Enter availablility:", 0, 3);
                 String email = input.stringEmail("Enter email:");
                 String mobile = input.stringPhone("Enter phone:");
@@ -68,8 +68,8 @@ public class DoctorHash {
 
     public void updateDoctorByID(List<Doctor> listDoctors) {
         //Check list is empty
-        if (listDoctors.isEmpty()) {
-            System.out.println("List students is empty.");
+        if (empty(listDoctors) != null) {
+            System.out.println(empty(listDoctors));
             return;
         }
         System.out.println("--------- Update Doctor -------");
@@ -90,18 +90,34 @@ public class DoctorHash {
         System.out.println("Update doctor successfully");
     }
 
-    private String inputCode(List<Doctor> listDoctors) {
+    public String empty(List<Doctor> listDoctors) {
+        if (listDoctors.isEmpty()) {
+            return "List students is empty.";
+        } else {
+            return null;
+        }
+    }
+
+    public String inputCode(List<Doctor> listDoctors) {
         Input input = new Input();
-        Validate check = new Validate();
+
         //Run until find code in list
         do {
             String code = input.stringCode("Enter code to find: ");
-            if (check.isDuplicatelyCodeDoctor(code, listDoctors)) {
+            code = IDNotExist(listDoctors, code);
+            if (code.compareTo(code) == 0) {
                 return code;
-            } else {
-                System.out.println("Can't find code is " + code);
             }
         } while (true);
+    }
+
+    public String IDNotExist(List<Doctor> listDoctors, String code) {
+        Validate check = new Validate();
+        if (check.isDuplicatelyCodeDoctor(code, listDoctors)) {
+            return code;
+        } else {
+            return "ID is not exist in the list";
+        }
     }
 
     private Doctor inputInfoToUpdate(List<Doctor> listDoctors,
@@ -116,12 +132,12 @@ public class DoctorHash {
                     codeToUpdate)) {
                 System.out.println("Code is duplicate");
             } else {
-                String name = input.stringWord("Enter Name:", 20);
+                String name = input.stringName("Enter Name:");
                 Date dateOfBirth = input.stringDate("Enter Date of Birth:");
-                String specialization = input.stringWord("Enter Specialization:", 255);
-                int availability = input.option("Enter availablility:", 0, 3);
+                String specialization = input.stringSpecialization("Enter Specialization:");
+                int availability = input.stringAvailability("Enter availablility:");
                 String email = input.stringEmail("Enter email:");
-                String mobile = input.stringWord("Enter phone:", 10);
+                String mobile = input.stringPhone("Enter phone:");
                 Doctor doc = new Doctor(code.trim(), name.trim(),
                         dateOfBirth, specialization, availability,
                         email, mobile);
@@ -139,8 +155,8 @@ public class DoctorHash {
 
     public void deleteDoctorById(List<Doctor> listDoctors) {
         //Check list is empty
-        if (listDoctors.isEmpty()) {
-            System.out.println("List students is empty.");
+        if (empty(listDoctors) != null) {
+            System.out.println(empty(listDoctors));
             return;
         }
         System.out.println("--------- Delete Doctor -------");
@@ -161,6 +177,10 @@ public class DoctorHash {
 
     public void searchDoctorsById(List<Doctor> listDoctors) {
         Input input = new Input();
+        if (empty(listDoctors) != null) {
+            System.out.println(empty(listDoctors));
+            return;
+        }
         System.out.println("--------- Search Doctor -------");
         //User enter text
         String text = input.stringCode("Enter text:");
@@ -203,30 +223,30 @@ public class DoctorHash {
     }
 
     public void sortByDoB(List<Doctor> listDoctors) {
-        if (listDoctors.isEmpty()) {
-            System.out.println("Database is not exist");
-        } else {
-            List<Doctor> doctorsByDoB = new ArrayList<>();
-            doctorsByDoB.addAll(listDoctors);
-            try {
-                System.out.println("--------- Result -------");
-                //Search Doctors by code
-                Collections.sort(doctorsByDoB, new Comparator<Doctor>() {
-                    @Override
-                    public int compare(Doctor o1, Doctor o2) {
-                        return o1.getDateOfBird().compareTo(o2.getDateOfBird());
-                    }
-                });
-
-                System.out.printf("%-10s%-10s%-10s%-10s%-10s%-10s%-10s\n", "Code", "Name", "DoB",
-                        "Specializ", "Availa", "Email", "Mobile");
-                //Display Doctors just searched
-                for (Doctor doctor : listDoctors) {
-                    doctor.display();
+        if (empty(listDoctors) != null) {
+            System.out.println(empty(listDoctors));
+            return;
+        }
+        List<Doctor> doctorsByDoB = new ArrayList<>();
+        doctorsByDoB.addAll(listDoctors);
+        try {
+            System.out.println("--------- Result -------");
+            //Search Doctors by code
+            Collections.sort(doctorsByDoB, new Comparator<Doctor>() {
+                @Override
+                public int compare(Doctor o1, Doctor o2) {
+                    return o1.getDateOfBird().compareTo(o2.getDateOfBird());
                 }
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+            });
+
+            System.out.printf("%-10s%-10s%-10s%-10s%-10s%-10s%-10s\n", "Code", "Name", "DoB",
+                    "Specializ", "Availa", "Email", "Mobile");
+            //Display Doctors just searched
+            for (Doctor doctor : listDoctors) {
+                doctor.display();
             }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 

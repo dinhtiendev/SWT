@@ -87,43 +87,119 @@ public class Input {
         do {
             System.out.print(message);
             input = sc.nextLine();
-            if (check.isCode(input)) {
-                break;
-            } else {
-                System.out.println("Must code. Pls, enter again!");
+            if (input.compareTo(code(input)) == 0) {
+                return input;
             }
         } while (true);
-        return input;
     }
 
-    public String stringWord(String message, int number) {
+    public String code(String input) {
+        if (check.isCode(input) && Integer.parseInt(input) > 0) {
+            return input;
+        } else {
+            return "ID is positive integer number";
+        }
+    }
+
+    public int stringAvailability(String message) {
+        String input = "";
+        //Run again until check valid vode is true so break loop
+        do {
+            System.out.print(message);
+            input = sc.nextLine();
+            if (input.compareTo(availability(input)) == 0) {
+                return Integer.parseInt(input);
+            }
+        } while (true);
+    }
+
+    public String availability(String input) {
+        if (check.isCode(input) && Integer.parseInt(input) >= 0 && Integer.parseInt(input) <= 3) {
+            return input;
+        } else {
+            return "Availability is integer number indicating 4 states of a doctor: 0 for in vacation, 1 for available, 2 for busy in emergency case, 3 for in diagnosing case.";
+        }
+    }
+
+    public String stringName(String message) {
         String input = "";
         //Run again until check valid words is true so break loop
         do {
             System.out.print(message);
             input = sc.nextLine();
-            if (check.isWord(input) && input.length() <= number) {
-                break;
-            } else {
-                System.out.println("Pls, enter again!");
+            if (input.compareTo(name(input)) == 0) {
+                return input;
             }
         } while (true);
-        return input;
     }
-    
+
+    public String name(String input) {
+        if (check.isWord(input) && input.length() <= 50) {
+            return input;
+        } else {
+            return "Name is not longer than 50 characters";
+        }
+    }
+
+    public String stringSpecialization(String message) {
+        String input = "";
+        //Run again until check valid words is true so break loop
+        do {
+            System.out.print(message);
+            input = sc.nextLine();
+            if (input.compareTo(specialization(input)) == 0) {
+                return input;
+            }
+        } while (true);
+    }
+
+    public String specialization(String input) {
+        if (check.isWord(input) && input.length() <= 100) {
+            return input;
+        } else {
+            return "Specialization is not longer than 100 characters";
+        }
+    }
+
+    public String stringPhone(String message) {
+        String input = "";
+        //Run again until check valid words is true so break loop
+        do {
+            System.out.print(message);
+            input = sc.nextLine();
+            if (input.compareTo(phone(input)) == 0) {
+                return input;
+            }
+        } while (true);
+    }
+
+    public String phone(String input) {
+        if (check.isPhone(input)) {
+            return input;
+        } else {
+            return "Mobile is a string of number conforming (000)-000-0000 format";
+        }
+    }
+
     public String stringEmail(String message) {
         String input = "";
         //Run again until check valid words is true so break loop
         do {
             System.out.print(message);
             input = sc.nextLine();
-            if (check.isEmail(input)) {
-                break;
-            } else {
-                System.out.println("Pls, enter again!");
+            if (input.compareTo(email(input)) == 0) {
+                return input;
             }
         } while (true);
-        return input;
+    }
+
+    public String email(String input) {
+
+        if (check.isEmail(input)) {
+            return input;
+        } else {
+            return "Email is a string conforming email format";
+        }
     }
 
     public Date stringDate(String message) {
@@ -133,10 +209,8 @@ public class Input {
         do {
             System.out.print(message);
             input = sc.nextLine();
-            if (check.isDate(input)) {
+            if (input.compareTo(date(input)) == 0) {
                 break;
-            } else {
-                System.out.println("Pls, enter again!");
             }
         } while (true);
         try {
@@ -147,18 +221,11 @@ public class Input {
         return null;
     }
 
-    String stringPhone(String message) {
-        String input = "";
-        //Run again until check valid vode is true so break loop
-        do {
-            System.out.print(message);
-            input = sc.nextLine();
-            if (check.isPhone(input)) {
-                break;
-            } else {
-                System.out.println("Must number. Pls, enter again!");
-            }
-        } while (true);
-        return input;
+    public String date(String input) {
+        if (check.isDate(input)) {
+            return input;
+        } else {
+            return "DateOfBirth is string which conforms dd/MM/yyyy";
+        }
     }
 }
