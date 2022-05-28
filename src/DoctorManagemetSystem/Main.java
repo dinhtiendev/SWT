@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Tien dep trai qua
+ * 
  * @author Admin
  */
 public class Main {
